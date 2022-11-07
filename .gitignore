@@ -1,0 +1,8 @@
+/node_modules
+/lib
+.env
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode

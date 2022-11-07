@@ -1,0 +1,34 @@
+{
+  "name": "react-file-chunk-uploader",
+  "version": "1.0.0",
+  "description": "This package provides the special react hook to upload files using chunks",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Pashkinz92",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "prepare": "yarn run build"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/uuid": "^8.3.4",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-strict-react": "^9.0.2",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-tsc": "^2.0.0",
+    "eslint-staged": "^1.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "react": "^17.0.2 || ^18.0.1",
+    "uuid": "^9.0.0"
+  }
+}
