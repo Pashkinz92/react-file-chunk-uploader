@@ -4,6 +4,7 @@
   "description": "This package provides the special react hook to upload files using chunks",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "type": "module",
   "author": "Pashkinz92",
   "license": "MIT",
   "private": false,
