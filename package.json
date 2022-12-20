@@ -1,6 +1,6 @@
 {
   "name": "react-file-chunk-uploader",
-  "version": "0.0.1-1",
+  "version": "0.1.0",
   "description": "This package provides the special react hook to upload files using chunks",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
