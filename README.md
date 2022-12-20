@@ -1,28 +1,73 @@
 ### Example how to use
-```JS
+```jsx
 
-const onUploadChunk = (params: onUploadChunksParams) => {
+
+const requestOptions = (body, contentType = null) => {
+    const headers = {
+        Authorization: 'Bearer <TOKEN>',
+    };
+    if (contentType) {
+        headers['Content-Type'] = contentType;
+    }
+    return {
+        method: 'POST',
+        headers,
+        body,
+    };
+};
+
+const onUploadChunk = (params) => {
     const formData = new FormData();
     formData.append('file', params.chunk, params.fileName);
-    // send POST request to server
-    // send payload: 
-    // { id: params.id, fileName: params.fileName}
-}
 
-const onUploadCompleted = async (params: onUploadCompletedParams) => {
-    // send post request to server
-    // send payload:
-    // { fileName: params.fileName, originFileName: params.originFileName}
-    const data = await post(...);
-    //dispatch(ACTION());
+    return fetch(
+        `<ENDPOINT TO UPLOAD A CHUNK>`,
+        requestOptions(formData),
+    );
+};
+
+const onUploadCompleted = async (params) => {
+    const data = await fetch(
+        `<ENDPOINT TO COMPLETE UPLOADING>`,
+        requestOptions(
+            JSON.stringify({ fileName: params.fileName, originFileName: params.originFileName }),
+            'application/json',
+        ),
+    );
+
+    const responseData = await data.json(); // {id, path}
+
+    if (responseData.id) {
+        await fetch(
+            `<ENDPOINT IF YOU NEED TO ASSIGN AN UPLOADED FILE TO SOME ENTITY>`,
+            requestOptions(
+                JSON.stringify({ productViewId: 1, mediaResourceId: responseData.id }),
+                'application/json',
+            ),
+        );
+    }
+
+    //You can move onUploadCompleted function inside you component and run some hooks after compliting. 
+    // Depends on response
+    //console.log('path', responseData.path);
     return data;
+};
+
+const FileUploaderComponent = () => {
+    const fileUploaderHook = useFileUploader({ onUploadChunk, onUploadCompleted });
+
+    const onChange = useCallback((e) => {
+        fileUploaderHook.handleFile(e.target.files[0]);
+    }, []);
+
+    return (
+        <div>
+            <input type="file" onChange={onChange} />
+            <div>{fileUploaderHook.fileToBeUpload?.size}</div>
+            <div>{fileUploaderHook.progress}</div>
+        </div>
+    );
 }
 
-const fileUploaderHook = useFileUploader({ onUploadChunk, onUploadCompleted, chunkSize });
-
-// Start upload:
-fileUploaderHook.handleFile(files[0])
-// Get progress
-fileUploaderHook.progress
 
 ```
